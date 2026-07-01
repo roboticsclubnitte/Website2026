@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<!-- The lang attribute specifies the document language. scroll-smooth provides a smoother scrolling experience when navigating with anchor links. -->
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z9SRW3KV80"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Z9SRW3KV80');
+  </script>
+  
+  <!-- Standard meta tags for character set and responsive viewport setup -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotics Club Nitte</title>
+  
+  <!-- Tailwind CSS is a utility-first CSS framework for rapid UI development. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Link to our custom stylesheet for additional styling and animations. -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<!-- The body uses a dark theme with custom selection colors for a better user experience. -->
+<body class="bg-slate-900 text-slate-300 font-sans leading-relaxed selection:bg-orange-500 selection:text-black">
+
+  <!-- =================================================================== -->
+  <!-- Header & Navigation                                                 -->
+  <!-- =================================================================== -->
+  <!-- A sticky header that stays at the top of the viewport on scroll. -->
+  <!-- The background has a blur effect for a modern look. -->
+  <header class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
+    <nav class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+      <!-- Logo and Club Name Link -->
+      <a href="#" class="flex items-center gap-3">
+        <!-- A light circular background to highlight the logo. -->
+        <div class="bg-slate-200 rounded-full p-1">
+          <img src="Images/robo.png" alt="Robotics Club Nitte Logo" class="h-12 w-auto">
+        </div>
+        <span class="text-xl font-bold text-white hidden sm:block">Robotics Club Nitte</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about" class="text-white hover:text-orange-500 transition-colors">About Us</a>
+        <a href="#divisions" class="text-white hover:text-orange-500 transition-colors">Divisions</a>
+        <!-- <a href="upcoming.html" class="text-white hover:text-orange-500 transition-colors">Events</a> -->
+        <a href="achievements.html" class="text-white hover:text-orange-500 transition-colors">Achievements</a>
+        <a href="#contact" class="bg-orange-500 hover:bg-red-500 text-white font-semibold px-5 py-2 rounded-full transition-colors">Contact</a>
+      </div>
+      
+      <!-- Mobile Menu Button (Hamburger Icon) -->
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </nav>
+    
+    <!-- Mobile Menu (Initially Hidden) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-slate-800">
+      <a href="#about" class="block text-white text-center py-2 hover:bg-slate-700">About Us</a>
+      <a href="#divisions" class="block text-white text-center py-2 hover:bg-slate-700">Divisions</a>
+      <!-- <a href="upcoming.html" class="block text-white text-center py-2 hover:bg-slate-700">Events</a> -->
+      <a href="achievements.html" class="block text-white text-center py-2 hover:bg-slate-700">Achievements</a>
+      <a href="#contact" class="block text-white text-center py-2 hover:bg-slate-700">Contact</a>
+    </div>
+
+    <!-- A subtle glowing line to separate the header from the main content. -->
+    <div class="h-px bg-gradient-to-r from-transparent via-teal-500/50 to-transparent"></div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main>
+    
+    
+ <!-- =================================================================== -->
+    <!-- Hero Section                                                        -->
+    <!-- =================================================================== -->
+    <section class="relative bg-slate-900 bg-cover bg-center min-h-[60vh] flex items-center justify-center px-6" style="background-image: url('Images/hero.jpg');">
+      <div class="absolute inset-0 bg-black/70"></div> <!-- Dark overlay for text readability -->
+      <div class="relative bg-black/50 p-8 rounded-lg max-w-4xl text-center">       
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-4" style="color: var(--color-accent);">
+          Robotics Club Nitte
+        </h1>
+        <p class="text-xl md:text-2xl font-semibold tracking-wide text-white">
+          Innovate. Build. Inspire.
+        </p>
+         <img src="Images/rcn.jpg" alt="Robotics Club Nitte " height="=400px" width="600px">
+      </div>
+    </section>
+
+
+
+    <!-- =================================================================== -->
+    <!-- Upcoming Event Section                                              -->
+    <!-- =================================================================== -->
+     <!-- 
+    <section class="bg-white text-slate-800 py-10 px-6 md:px-12 fade-in-section">
+      <div class="max-w-4xl mx-auto border-2 border-teal-500 rounded-lg p-6 md:p-10 shadow-lg">
+        <h2 class="text-3xl font-bold mb-3" style="color: var(--color-skyblue);">Upcoming Event</h2>
+        <article>
+          <h3 class="text-xl font-semibold mb-2">Line Follower Workshop</h3>
+          <p class="mb-4">
+            A hands-on workshop where you'll build and program your own line-following robot from scratch. Perfect for beginners!
+          </p>
+          <a href="upcoming.html" class="inline-block bg-orange-500 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-full transition-colors duration-300">
+            Learn More
+          </a>
+        </article>
+      </div>
+    </section>
+    -->
+    
+    <!-- =================================================================== -->
+    <!-- About Us Section                                                    -->
+    <!-- =================================================================== -->
+    <section id="about" class="py-12 px-6 md:px-12 fade-in-section">
+      <div class="max-w-5xl mx-auto flex flex-col items-center">
+        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">About Us</h2>
+        <div class="max-w-3xl text-center text-lg md:text-xl">
+          <p>
+            Established in 2014 at NMAMIT, the Robotics Club is an interdisciplinary club with a motive to provide practical, hands-on experience in various applications of robotics. As the official robotics and multidisciplinary club of the institute, it gives students of various disciplines exposure to work on complex projects. The club focuses on designing, building, and creating various mechanical and electronic bots, regularly conducts workshops on Bot building, Internet of Things, 3D modelling, and Programming languages, and actively participates in various technical fests and events at national and international levels.
+          </p>
+        </div>
+      </div>
+
+      <!-- Office Bearers Section -->
+      <div class="w-full mt-20 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold mb-12 text-center" style="color: var(--color-skyblue);">Office Bearers 2026</h2>
+        
+        <div class="flex flex-col items-center space-y-8 w-full">
+            <!-- ROW 1: 4 Members (President, Secretary, Captain, Treasurer) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 justify-center w-full max-w-6xl">
+                
+                <!-- President -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Sanket_narale_.jpg" alt="Sanket Narale" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SN'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Sanket Narale</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">President</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
+                </div>
+
+                <!-- Secretary -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Aaron Felix Fernandes .jpg" alt="Aaron Felix Fernandes" onerror="this.style.display='none'; this.parentElement.innerHTML = 'AF'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Aaron Felix Fernandes</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Secretary</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
+                </div>
+
+                <!-- Captain -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Shreyas.JPG" alt="Shreyas Suvarna V" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SS'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Shreyas Suvarna V</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Captain</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Electronics & Comm.</p>
+                </div>
+
+                <!-- Treasurer -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Sharan Rai K.jpg" alt="Sharan Rai K" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SR'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Sharan Rai K</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Treasurer</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">AI & ML</p>
+                </div>
+            </div>
+
+            <!-- ROW 2: 5 Members -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center w-full max-w-7xl">
+                
+                <!-- Vice President -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Nagendra.jpg" alt="Nagendra S Hegde" onerror="this.style.display='none'; this.parentElement.innerHTML = 'NH'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Nagendra S Hegde</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Vice President</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">VLSI Design</p>
+                </div>
+
+                <!-- Vice-Captain -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Arham.jpg" alt="Arham Yusuf Shiekh" onerror="this.style.display='none'; this.parentElement.innerHTML = 'AY'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Arham Yusuf Shiekh</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Vice-Captain & Inventory Manager</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
+                </div>
+
+                <!-- Jt Secretary -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Nikhil.jpg" alt="P Nikhil Pai" onerror="this.style.display='none'; this.parentElement.innerHTML = 'NP'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">P Nikhil Pai</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Joint Secretary & Inventory Manager</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">VLSI Design</p>
+                </div>
+
+                <!-- Jt Treasurer -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Chandramouli.JPG" alt="Chandramouli Sharma" onerror="this.style.display='none'; this.parentElement.innerHTML = 'CS'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Chandramouli Sharma</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Jt. Treasurer, Inventory & Web Lead</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Computer & Comm.</p>
+                </div>
+
+                <!-- Workshop Lead (Savin) -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Savin.jpg" alt="Savin Suresha Almeida" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SA'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Savin Suresha Almeida</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop & R&D Lead</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
+                </div>
+            </div>
+
+            <!-- ROW 3: 5 Members -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center w-full max-w-7xl">
+                
+                <!-- Workshop Lead (Pratham) -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Pratham Amin.jpeg" alt="Pratham Amin" onerror="this.style.display='none'; this.parentElement.innerHTML = 'PA'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Pratham Amin</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop & R&D Lead</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Mechanical Engg</p>
+                </div>
+
+                <!-- Social Media (Sameeksha) -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Sameeksha D.jpg" alt="Sameeksha D" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SD'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Sameeksha D</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop, R&D & Social Media Lead</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Electronics & Comm.</p>
+                </div>
+
+                <!-- Social Media (Ayush) -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Ayush.jpg" alt="Y Ayush" onerror="this.style.display='none'; this.parentElement.innerHTML = 'YA'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Y Ayush</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop, R&D & Social Media Lead</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Electronics & Comm.</p>
+                </div>
+
+                <!-- Inventory (Raghunandana) -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Raghunandan Mayya.jpeg" alt="Raghunandana Mayya" onerror="this.style.display='none'; this.parentElement.innerHTML = 'RM'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Raghunandana Mayya</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Inventory Manager & Social Media Lead</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Mechanical Engg</p>
+                </div>
+
+                <!-- Web Lead (Pranav) -->
+                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
+                            <img class="w-full h-full object-cover" src="Officeb/Pranav S Salian.jpg" alt="Pranav S Salian" onerror="this.style.display='none'; this.parentElement.innerHTML = 'PS'">
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Pranav S Salian</h3>
+                        <p class="text-orange-500 font-semibold text-sm mb-1">Website Development Lead</p>
+                    </div>
+                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Our Divisions Section                                               -->
+    <!-- =================================================================== -->
+    <section id="divisions" class="bg-white text-slate-800 py-12 px-6 md:px-12 fade-in-section">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">
+          Our Divisions
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Combat Robotics Card -->
+          <article class="border-2 border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-2xl font-semibold mb-3" style="color: var(--color-accent);">Combat Robotics</h3>
+            <div class="h-64 mb-4 overflow-hidden rounded-md border-2 border-slate-200">
+              <img src="Images/Combat.jpg" alt="Combat Robotics Projects" class="w-full h-full object-contain">
+            </div>
+            <p>
+              Our combat robotics division is involved in building various bots like Race bots, Soccer bots, sumo bots and War bots. We focus on design, testing, fabrication, and control.
+            </p>
+          </article>
+          <!-- Soft Robotics Card -->
+          <article class="border-2 border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-2xl font-semibold mb-3" style="color: var(--color-accent);">Soft Robotics</h3>
+            <div class="h-64 mb-4 overflow-hidden rounded-md border-2 border-slate-200">
+              <img src="Images/softrobo.jpg" alt="Soft Robotics Project" class="w-full h-full object-contain">
+            </div>
+            <p>
+              We explore the field of soft robotics by designing, creating, testing, and implementing line followers, maze solvers, and various IoT hobby projects.
+            </p>
+          </article>
+          <!-- Aero Division Card -->
+          <article class="border-2 border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-2xl font-semibold mb-3" style="color: var(--color-accent);">Aero Division</h3>
+            <div class="h-64 mb-4 overflow-hidden rounded-md border-2 border-slate-200">
+              <img src="Images/Aerodiv.jpg" alt="Aero Division Project" class="w-full h-full object-contain">
+            </div>
+            <p>
+              Our Aero division involves the design, fabrication, and implementation of drones and rockets.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Recent Events & Workshops Section                                   -->
+    <!-- =================================================================== -->
+    <section class="py-12 px-6 md:px-12 fade-in-section">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">
+          Recent Events & Workshops
+        </h2>
+        <!-- Replaced flexbox with grid for specific row layout -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Line Follower Workshop Card (Occupies full first row) -->
+          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300 md:col-span-3">
+            <h3 class="text-xl font-semibold mb-2 text-orange-500">Line Follower Workshop</h3>
+            <!-- Removed h-48 to allow full image height, changed object-cover to h-auto -->
+            <div class="mb-4 overflow-hidden rounded-md border border-slate-600">
+               <img src="Images/lfr workshop_2025.jpg" alt="Line Follower Workshop 2025" class="w-full h-auto">
+            </div>
+            <p>
+              We hosted 53 students on November 8, 2025, for an intensive "Line Follower Robot" workshop. From mastering Fusion 360 and soldering to final assembly and coding, participants navigated the full robotics development cycle, resulting in fully functional autonomous robots.
+            </p>
+          </article>
+
+          <!-- Internet Of Things Card -->
+          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-xl font-semibold mb-2 text-orange-500">Internet Of Things</h3>
+            <p>
+              Workshops covering IoT fundamentals, sensor integration, and cloud connectivity to create smart robotic systems.
+            </p>
+          </article>
+          <!-- 3D Modelling Card -->
+          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-xl font-semibold mb-2 text-orange-500">3D Modelling</h3>
+            <p>
+              Training on CAD software to design precise 3D models for robot parts and assemblies, preparing for fabrication.
+            </p>
+          </article>
+          <!-- PCB Design Card -->
+          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
+            <h3 class="text-xl font-semibold mb-2 text-orange-500">PCB Design</h3>
+            <p>
+              Instruction on designing printed circuit boards for custom electronic circuits used in robotic projects.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Our Achievements Section                                            -->
+    <!-- =================================================================== -->
+    <section class="bg-white text-slate-800 py-12 px-6 md:px-12 fade-in-section">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold mb-8 text-center" style="color: var(--color-skyblue);">
+          Our Achievements
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-slate-100 border-l-4 border-orange-500 p-6 rounded-r-lg md:col-span-2 flex flex-col md:flex-row items-center gap-6">
+            <img src="Achimg/Techtatva25.JPG" alt="TECHTATVA 2025 MIT Manipal" class="w-full md:w-1/2 rounded-lg shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Techtatva+2025';">
+            <div class="md:w-1/2">
+                <h3 class="text-2xl font-bold text-slate-700 mb-2">Dominant Victory at TECHTATVA 2025</h3>
+                <p class="text-lg">An outstanding performance at MIT Manipal, sweeping top positions in multiple events including Cadify, Maze Solver, Line Follower, Off-road Mayhem, and Water Rocket.</p>
+            </div>
+          </div>
+          <div class="bg-slate-100 border-l-4 border-orange-500 p-6 rounded-r-lg">
+              <img src="Achimg/Technoxian2023.jpg" alt="Technoxian World Cup 2023" class="w-full rounded-lg shadow-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Technoxian+2023';">
+              <h3 class="text-xl font-bold text-slate-700 mb-2">Technoxian World Cup 2023</h3>
+              <p class="text-lg">The team secured the 2nd runners-up position in this prestigious event, competing in the Under 15kg Robowars category.</p>
+          </div>
+          <div class="bg-slate-100 border-l-4 border-orange-500 p-6 rounded-r-lg">
+              <img src="Achimg/TECHNOVANZA2023.png" alt="TECHNOVANZA 2023 VJTI Mumbai" class="w-full rounded-lg shadow-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Technovanza+2023';">
+              <h3 class="text-xl font-bold text-slate-700 mb-2">Success at TECHNOVANZA 2023</h3>
+              <p class="text-lg">The team achieved 2nd Runner Up in both the 15kg Robowars and Robo Sumo categories at VJTI, Mumbai.</p>
+          </div>
+        </div>
+        <div class="text-center mt-10">
+          <a href="achievements.html" class="inline-block bg-orange-500 hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-full transition-colors duration-300">
+            View All Achievements
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- Contact Us Section                                                  -->
+    <!-- =================================================================== -->
+    <section id="contact" class="py-12 px-6 md:px-12 fade-in-section" aria-label="Contact Us">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">
+          Get in touch with us
+        </h2>
+        
+        <!-- This form is configured to send data to a Google Form. -->
+        <!-- The 'id' is used by our JavaScript to handle the submission. -->
+        <form id="contact-form" class="space-y-6" aria-label="Contact form">
+          <!-- Each input's 'name' attribute has been updated with the correct entry.ID -->
+          <div>
+            <label for="name" class="block mb-2 font-semibold">Name</label>
+            <input type="text" id="name" name="entry.887813559" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Your full name" autocomplete="name">
+          </div>
+          <div>
+            <label for="email" class="block mb-2 font-semibold">Email</label>
+            <input type="email" id="email" name="entry.2027395874" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div>
+            <label for="subject" class="block mb-2 font-semibold">Subject</label>
+            <input type="text" id="subject" name="entry.701956586" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Subject of your message">
+          </div>
+          <div>
+            <label for="message" class="block mb-2 font-semibold">Message</label>
+            <textarea id="message" name="entry.3234755" rows="5" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 resize-y" placeholder="Write your message here..."></textarea>
+          </div>
+          <button type="submit" class="bg-orange-500 hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-full transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400">
+            Send Message
+          </button>
+        </form>
+
+        <!-- This message is hidden by default and shown by our JavaScript on successful form submission. -->
+        <div id="success-message" class="hidden mt-6 p-4 text-center text-lg bg-teal-500/20 text-teal-300 border border-teal-500 rounded-md">
+          Thank you for your message! We'll get back to you soon.
+        </div>
+
+        <div class="mt-16 text-center text-slate-400">
+  <h3 class="text-2xl font-bold mb-4" style="color: var(--color-skyblue);">Connect with Us</h3>
+  <div class="flex justify-center items-center gap-6 mb-8">  
+            <a href="https://www.instagram.com/roboticsclub_nitte/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:opacity-80 transition-opacity">
+              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
+                <title>Instagram</title>
+                <defs>
+                  <linearGradient id="insta-gradient" x1="50%" y1="0%" x2="50%" y2="100%">
+                    <stop offset="0%" stop-color="#833ab4"></stop>
+                    <stop offset="50%" stop-color="#fd1d1d"></stop>
+                    <stop offset="100%" stop-color="#fcb045"></stop>
+                  </linearGradient>
+                </defs>
+                <path fill="url(#insta-gradient)" d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.784.305-1.455.718-2.126 1.388C1.344 2.69 1.03 3.35 1.03 4.135c-.3.765-.5 1.635-.56 2.913-.06 1.28-.07 1.687-.07 4.947s.015 3.667.072 4.947c.06 1.278.26 2.15.56 2.913.305.785.72 1.455 1.455-1.39 2.126.67.67 1.34.965 2.125 1.27.765.3 1.635.5 2.913.56 1.28.056 1.687.07 4.947.07s3.667-.015 4.947-.072c1.278-.06 2.15-.26 2.913-.56.785-.305 1.455-.72 2.126-1.39.67-.67.965-1.34 1.27-2.125.3-.765.5-1.635.56-2.913.06-1.28.07-1.687.07-4.947s-.015-3.667-.072-4.947c-.06-1.278-.26-2.15-.56-2.913-.305-.785-.72-1.455-1.39-2.126C21.31 1.344 20.65 1.03 19.865 1.03c-.765-.3-1.635-.5-2.913-.56C15.667.015 15.26 0 12 0zm0 2.16c3.2 0 3.585.01 4.85.07 1.17.05 1.8.22 2.22.42.5.24.87.52 1.25.9.38.38.67.75.9 1.25.2.42.37 1.05.42 2.22.06 1.265.07 1.65.07 4.85s-.01 3.585-.07 4.85c-.05 1.17-.22 1.8-.42 2.22-.24.5-.52.87-.9 1.25-.38.38-.75.67-1.25.9-.42-.37-1.05-.42-2.22C2.17 15.585 2.16 15.2 2.16 12s.01-3.585.07-4.85c.05-1.17.22 1.8.42-2.22.24-.5.52.87.9-1.25.38.38.75.67 1.25.9.42.2 1.05.37 2.22.42C8.415 2.17 8.8 2.16 12 2.16zm0 3.14A6.7 6.7 0 1012 18.7a6.7 6.7 0 000-13.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
+              </svg>
+            </a>
+            <!-- LinkedIn Logo -->
+            <a href="https://www.linkedin.com/company/robotics-club-nitte/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:opacity-80 transition-opacity">
+              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="#0077B5">
+                <title>LinkedIn</title>
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.354V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.37-1.852 3.602 0 4.268 2.37 4.268 5.455v6.288zM5.337 7.433a2.07 2.07 0 11.001-4.139 2.07 2.07 0 01-.001 4.139zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.225 0z"></path>
+              </svg>
+            </a>
+          </div>
+          <div class="flex justify-center items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              <a href="mailto:roboticsclub@nitte.edu.in" class="hover:text-orange-500 transition-colors text-lg">roboticsclub@nitte.edu.in</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- =================================================================== -->
+  <!-- Footer                                                              -->
+  <!-- =================================================================== -->
+  <footer class="bg-slate-800 border-t border-teal-500/20 text-white py-8 px-6 md:px-12">
+      <div class="max-w-6xl mx-auto text-center text-slate-400">
+          <p>&copy; 2025 Robotics Club Nitte. All Rights Reserved.</p>
+          <p class="mt-2 text-sm">NMAM Institute of Technology, Nitte</p>
+      </div>
+  </footer>
+
+  <!-- Link to our external JavaScript file. 'defer' ensures it runs after the HTML is parsed. -->
+  <script src="script.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+/* Custom Stylesheet for Robotics Club Nitte Website
+  --------------------------------------------------
+  This file contains custom styles that are not covered by Tailwind CSS,
+  including color variables, scrollbar styling, and animations.
+*/
+
+/* Color Variables:
+  Define the primary color palette for the website to ensure consistency.
+  These can be used throughout the CSS with the var() function.
+*/
+:root {
+  --color-skyblue: #0ea5e9; /* A bright, engaging blue for headings and links (Tailwind sky-500) */
+  --color-accent: #f97316;  /* A vibrant orange for call-to-action buttons and highlights (Tailwind orange-500) */
+}
+
+/* Scrollbar Styling:
+  Customizes the browser's scrollbar for a more integrated and themed look,
+  improving the overall user experience.
+*/
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a; /* A dark slate color that matches the body background (slate-900) */
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent); /* Uses the accent orange for the scrollbar thumb */
+  border-radius: 10px;
+  border: 2px solid #0f172a; /* Creates a small border around the thumb */
+}
+
+/* Fade-in Animation on Scroll:
+  This class is added by our JavaScript to elements as they enter the viewport.
+  It creates a smooth, subtle fade-in and upward transition.
+*/
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
