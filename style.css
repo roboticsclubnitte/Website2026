@@ -1,46 +1,344 @@
-/* Custom Stylesheet for Robotics Club Nitte Website
-  --------------------------------------------------
-  This file contains custom styles that are not covered by Tailwind CSS,
-  including color variables, scrollbar styling, and animations.
-*/
+/* ============================================================
+   Robotics Club Nitte — Iridescent Theme
+   Inspired by: fluid 3D forms, holographic surfaces, deep space
+   ============================================================ */
 
-/* Color Variables:
-  Define the primary color palette for the website to ensure consistency.
-  These can be used throughout the CSS with the var() function.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
 :root {
-  --color-skyblue: #0ea5e9; /* A bright, engaging blue for headings and links (Tailwind sky-500) */
-  --color-accent: #f97316;  /* A vibrant orange for call-to-action buttons and highlights (Tailwind orange-500) */
+  /* Core palette */
+  --void:        #0a0a0d;
+  --deep:        #14151a;
+  --surface:     #1c1e24;
+  --border:      rgba(255,255,255,0.16);
+
+  /* Iridescent accent spectrum */
+  --iris-1:      #d4a656;
+  --iris-2:      #f97316;
+  --iris-3:      #fbbf24;
+  --iris-4:      #0d9488;
+  --iris-5:      #06b6d4;
+
+  /* Brand blue — used for the club name everywhere */
+  --brand-blue:        #3b82f6;
+  --brand-blue-light:  #60a5fa;
+
+  /* Semantic aliases */
+  --color-accent:   #f97316;
+  --color-skyblue:  #38bdf8;
+
+  /* Typography — formal & clean */
+  --font-display: 'Inter', sans-serif;
+  --font-body:    'Source Sans 3', 'Inter', sans-serif;
 }
 
-/* Scrollbar Styling:
-  Customizes the browser's scrollbar for a more integrated and themed look,
-  improving the overall user experience.
-*/
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* ── Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--void);
+  color: #cacad2;
 }
-::-webkit-scrollbar-track {
-  background: #0f172a; /* A dark slate color that matches the body background (slate-900) */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--void); }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-accent); /* Uses the accent orange for the scrollbar thumb */
-  border-radius: 10px;
-  border: 2px solid #0f172a; /* Creates a small border around the thumb */
+  background: linear-gradient(180deg, var(--iris-1), var(--iris-2));
+  border-radius: 99px;
 }
 
-/* Fade-in Animation on Scroll:
-  This class is added by our JavaScript to elements as they enter the viewport.
-  It creates a smooth, subtle fade-in and upward transition.
-*/
+/* ── Noise / grain overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ── Ambient orbs (painted on sections via pseudo) ── */
+.orb-bg {
+  position: relative;
+  overflow: hidden;
+}
+.orb-bg::after {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(13,148,136,0.18) 0%, transparent 70%);
+  top: -200px; right: -200px;
+  pointer-events: none;
+}
+.orb-bg::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(249,115,22,0.12) 0%, transparent 70%);
+  bottom: -100px; left: -150px;
+  pointer-events: none;
+}
+
+/* ── Iridescent gradient text ── */
+.grad-text {
+  background: linear-gradient(135deg, var(--iris-3) 0%, var(--iris-1) 40%, var(--iris-4) 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.grad-text-cyan {
+  background: linear-gradient(135deg, var(--iris-5) 0%, var(--iris-4) 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Holographic card ── */
+.holo-card {
+  background: var(--surface);
+  border: 2px solid var(--accent-border, var(--border));
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--accent-glow, transparent), 0 4px 20px rgba(0,0,0,0.35);
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.holo-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(212,166,86,0.06) 0%,
+    rgba(249,115,22,0.04) 40%,
+    rgba(13,148,136,0.06) 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.holo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px var(--accent-border, rgba(249,115,22,0.4)), 0 20px 60px rgba(0,0,0,0.5);
+}
+.holo-card:hover::before { opacity: 1; }
+
+/* ── Glowing border pill (role badge) ── */
+.role-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(59,130,246,0.12), rgba(96,165,250,0.10));
+  border: 1.5px solid rgba(59,130,246,0.5);
+  color: var(--brand-blue-light);
+}
+
+/* ── Avatar ring with iridescent glow ── */
+.avatar-ring {
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  background: linear-gradient(var(--deep), var(--deep)) padding-box,
+              linear-gradient(135deg, var(--iris-1), var(--iris-4), var(--iris-2)) border-box;
+  transition: box-shadow 0.3s ease;
+}
+.holo-card:hover .avatar-ring {
+  box-shadow: 0 0 20px rgba(212,166,86,0.35);
+}
+
+/* ── Achievement timeline card ── */
+.ach-card {
+  background: var(--deep);
+  border-left: 4px solid transparent;
+  border-image: linear-gradient(to bottom, var(--iris-1), var(--iris-4)) 1;
+  border-radius: 0 14px 14px 0;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ach-card:hover {
+  transform: translateX(6px);
+  box-shadow: -4px 0 24px rgba(212,166,86,0.2), 0 8px 40px rgba(0,0,0,0.4);
+}
+
+/* ── Timeline dot ── */
+.timeline-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--iris-1), var(--iris-2));
+  box-shadow: 0 0 8px rgba(212,166,86,0.6);
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+/* ── Medal tag ── */
+.medal {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.medal-gold   { background: rgba(251,191,36,0.18); color: #fbbf24; border: 2px solid rgba(251,191,36,0.65); box-shadow: 0 0 18px rgba(251,191,36,0.3); }
+.medal-silver { background: rgba(148,163,184,0.18); color: #cbd5e1; border: 2px solid rgba(148,163,184,0.65); box-shadow: 0 0 18px rgba(148,163,184,0.25); }
+.medal-bronze { background: rgba(180,83,9,0.18);  color: #f0955a;  border: 2px solid rgba(180,83,9,0.65); box-shadow: 0 0 18px rgba(180,83,9,0.27); }
+.medal:hover { transform: translateY(-2px) scale(1.04); }
+
+/* ── Section divider ── */
+.iris-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--iris-1), var(--iris-4), var(--iris-5), transparent);
+  opacity: 0.55;
+}
+
+/* ── Scroll fade-in ── */
 .fade-in-section {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
-
 .fade-in-section.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ── Nav link underline sweep ── */
+.nav-link {
+  position: relative;
+  color: #cacad2;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--iris-1), var(--iris-2));
+  transition: width 0.3s ease;
+}
+.nav-link:hover { color: #fff; }
+.nav-link:hover::after { width: 100%; }
+
+/* ── CTA button ── */
+.btn-iris {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 99px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--iris-2), var(--iris-1));
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 4px 20px rgba(249,115,22,0.35);
+}
+.btn-iris:hover {
+  opacity: 0.92;
+  box-shadow: 0 6px 28px rgba(249,115,22,0.5);
+  transform: translateY(-1px);
+}
+
+/* ── Office bearers: hexagonal layout helper ── */
+.bearer-hex-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* ── Section heading accent ── */
+.section-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--iris-2);
+  margin-bottom: 6px;
+}
+
+/* ── Light border override (e.g. office bearer cards) ── */
+.card-light-border {
+  border-color: rgba(237,233,222,0.55) !important;
+  box-shadow: 0 0 0 1px rgba(237,233,222,0.22), 0 4px 20px rgba(0,0,0,0.35) !important;
+}
+.card-light-border:hover {
+  box-shadow: 0 0 0 1px rgba(237,233,222,0.6), 0 20px 60px rgba(0,0,0,0.5) !important;
+}
+
+/* ── Responsive: stack workshop cards on phones ── */
+@media (max-width: 640px) {
+  .workshop-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .leads-grid {
+    grid-template-columns: repeat(3,1fr) !important;
+  }
+  .leads-grid > *:nth-child(10) {
+    grid-column: 2;
+  }
+}
+
+/* ── Media card: photo + text side by side on desktop, title→photo→text stacked on phone ── */
+.media-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "photo title" "photo text";
+  min-height: 280px;
+}
+.media-card.media-card-reverse {
+  grid-template-areas: "title photo" "text photo";
+}
+.media-card .mc-photo { grid-area: photo; overflow: hidden; }
+.media-card .mc-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media-card .mc-title { grid-area: title; padding: 32px 32px 0; display: flex; flex-direction: column; justify-content: flex-end; }
+.media-card .mc-text { grid-area: text; padding: 0 32px 32px; }
+
+@media (max-width: 640px) {
+  .media-card, .media-card.media-card-reverse {
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "title" "photo" "text" !important;
+    min-height: auto !important;
+  }
+  .media-card .mc-photo { min-height: 220px; }
+  .media-card .mc-title { padding: 22px 20px 14px; justify-content: flex-start; }
+  .media-card .mc-text { padding: 0 20px 22px; }
+}
+
+/* ── Alternating two-tone section theme (orange / blue) ── */
+.section-orange {
+  --accent-border: rgba(249,115,22,0.85);
+  --accent-glow:   rgba(249,115,22,0.35);
+  --bg-shade:      #0c0a08;
+  border-top: 3px solid rgba(249,115,22,0.55);
+  border-bottom: 3px solid rgba(249,115,22,0.55);
+  background-image: radial-gradient(ellipse 1200px 500px at 50% 0%, rgba(249,115,22,0.09) 0%, transparent 60%);
+}
+.section-blue {
+  --accent-border: rgba(59,130,246,0.85);
+  --accent-glow:   rgba(59,130,246,0.35);
+  --bg-shade:      #0a0f1e;
+  border-top: 3px solid rgba(59,130,246,0.55);
+  border-bottom: 3px solid rgba(59,130,246,0.55);
+  background-image: radial-gradient(ellipse 1200px 500px at 50% 0%, rgba(59,130,246,0.1) 0%, transparent 60%);
 }

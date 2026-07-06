@@ -1,533 +1,583 @@
 <!DOCTYPE html>
-<!-- The lang attribute specifies the document language. scroll-smooth provides a smoother scrolling experience when navigating with anchor links. -->
 <html lang="en" class="scroll-smooth">
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z9SRW3KV80"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-Z9SRW3KV80');
   </script>
-  
-  <!-- Standard meta tags for character set and responsive viewport setup -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Robotics Club Nitte</title>
-  
-  <!-- Tailwind CSS is a utility-first CSS framework for rapid UI development. -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Link to our custom stylesheet for additional styling and animations. -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Tailwind compiled CSS (run: npm run dev) -->
+  <link rel="stylesheet" href="./dist/output.css">
+  <!-- Custom styles (colours, animations, components) -->
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
-<!-- The body uses a dark theme with custom selection colors for a better user experience. -->
-<body class="bg-slate-900 text-slate-300 font-sans leading-relaxed selection:bg-orange-500 selection:text-black">
+<body style="background-color:#0a0a0d; color:#cacad2; font-family:'Source Sans 3','Inter',sans-serif;">
+<!-- ══ STICKY TOPBAR ══ -->
+<div id="topbar" style="position:fixed;top:0;left:0;right:0;z-index:300;height:64px;background:rgba(10,8,18,0.95);backdrop-filter:blur(16px);border-bottom:1.5px solid rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:space-between;padding:0 16px;">
+  <!-- Left: back button -->
+  <a id="back-btn" href="javascript:history.back()" aria-label="Go back" style="width:40px;height:40px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.2);background:rgba(249,115,22,0.12);display:flex;align-items:center;justify-content:center;color:#f97316;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(249,115,22,0.25)'" onmouseout="this.style.background='rgba(249,115,22,0.12)'">
+    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/></svg>
+  </a>
+  <!-- Center: brand -->
+  <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:8px;position:absolute;left:50%;transform:translateX(-50%);">
+    <span style="font-family:'Inter',sans-serif;font-weight:800;font-size:0.95rem;color:#fff;letter-spacing:-0.01em;">Robotics Club <span style="color:#3b82f6;">Nitte</span></span>
+  </a>
+  <!-- Right: hamburger (orange) -->
+  <button id="sidebar-toggle" aria-label="Open navigation" style="width:46px;height:46px;border-radius:12px;border:2px solid #f97316;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#f97316;transition:box-shadow 0.2s,transform 0.15s;box-shadow:0 0 10px rgba(249,115,22,0.4),inset 0 0 10px rgba(249,115,22,0.05);" onmouseover="this.style.boxShadow='0 0 20px rgba(249,115,22,0.75),inset 0 0 14px rgba(249,115,22,0.1)';this.style.transform='scale(1.05)'" onmouseout="this.style.boxShadow='0 0 10px rgba(249,115,22,0.4),inset 0 0 10px rgba(249,115,22,0.05)';this.style.transform='scale(1)'">
+    <svg id="icon-open"  width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg id="icon-close" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+</div>
 
-  <!-- =================================================================== -->
-  <!-- Header & Navigation                                                 -->
-  <!-- =================================================================== -->
-  <!-- A sticky header that stays at the top of the viewport on scroll. -->
-  <!-- The background has a blur effect for a modern look. -->
-  <header class="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50">
-    <nav class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-      <!-- Logo and Club Name Link -->
-      <a href="#" class="flex items-center gap-3">
-        <!-- A light circular background to highlight the logo. -->
-        <div class="bg-slate-200 rounded-full p-1">
-          <img src="Images/robo.png" alt="Robotics Club Nitte Logo" class="h-12 w-auto">
+<!-- ══ SIDEBAR BACKDROP ══ -->
+<div id="sidebar-backdrop" style="position:fixed;inset:0;z-index:310;background:rgba(0,0,0,0.6);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity 0.3s ease;"></div>
+
+<!-- ══ SIDE PANEL ══ -->
+<nav id="sidebar" style="position:fixed;top:0;left:0;height:100vh;width:280px;z-index:320;background:rgba(14,15,18,0.98);backdrop-filter:blur(24px);border-right:1.5px solid rgba(255,255,255,0.16);transform:translateX(-100%);transition:transform 0.35s cubic-bezier(.22,1,.36,1);display:flex;flex-direction:column;overflow-y:auto;">
+  <div style="padding:20px 24px 16px;border-bottom:1.5px solid rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:space-between;">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+      <div style="background:#e2e8f0;border-radius:50%;padding:3px;flex-shrink:0;">
+        <img src="Images/robo.png" alt="Logo" style="height:36px;width:auto;">
+      </div>
+      <div>
+        <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:0.95rem;color:#fff;line-height:1.2;margin:0;">Robotics Club</p>
+        <p style="font-family:'Inter',sans-serif;font-weight:800;font-size:0.95rem;line-height:1.2;color:#3b82f6;margin:0;">Nitte</p>
+      </div>
+    </a>
+    <button onclick="closeSidebar()" style="width:32px;height:32px;border-radius:8px;border:1.5px solid rgba(255,255,255,0.2);background:transparent;cursor:pointer;color:rgba(202,202,210,0.5);display:flex;align-items:center;justify-content:center;" aria-label="Close">
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div style="padding:16px 12px;flex:1;">
+    <p style="font-size:0.58rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(202,202,210,0.3);padding:0 8px;margin:0 0 8px;">Navigation</p>
+    <a href="index.html#about"     class="side-link" onclick="closeSidebar()"><span class="side-icon"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>About Us</a>
+    <a href="index.html#divisions" class="side-link" onclick="closeSidebar()"><span class="side-icon"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></span>Divisions</a>
+    <a href="achievements.html"    class="side-link"><span class="side-icon"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></span>Achievements</a>
+    <a href="index.html#contact"   class="side-link" onclick="closeSidebar()"><span class="side-icon"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>Contact Us</a>
+  </div>
+  <div style="padding:14px 24px;border-top:1.5px solid rgba(255,255,255,0.16);">
+    <p style="font-size:0.7rem;color:rgba(202,202,210,0.3);margin:0;">NMAM Institute of Technology, Nitte</p>
+  </div>
+</nav>
+
+<!-- ══ SIDEBAR STYLES & JS ══ -->
+<style>
+  body { padding-top: 64px; }
+  .side-link { display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;font-size:0.88rem;font-weight:500;color:rgba(202,202,210,0.8);transition:background 0.2s,color 0.2s;margin-bottom:2px; }
+  .side-link:hover { background:rgba(249,115,22,0.08);color:#fff; }
+  .side-link-resource { color:rgba(202,202,210,0.6); }
+  .side-link-resource:hover { background:rgba(249,115,22,0.08);color:#fbbf24; }
+  .side-icon { width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:rgba(202,202,210,0.55);transition:background 0.2s,color 0.2s; }
+  .side-link:hover .side-icon { background:rgba(249,115,22,0.15);color:#f97316;border-color:rgba(249,115,22,0.3); }
+  .side-icon-resource { background:rgba(249,115,22,0.06);border-color:rgba(249,115,22,0.18);color:rgba(249,115,22,0.6); }
+  .side-link-resource:hover .side-icon-resource { background:rgba(249,115,22,0.18);color:#f97316; }
+  /* Orange buttons everywhere */
+  .btn-iris, .btn-orange, button[type="submit"] { background:linear-gradient(135deg,#f97316,#ea580c) !important;box-shadow:0 4px 18px rgba(249,115,22,0.35) !important;color:#fff !important; }
+  .btn-iris:hover, .btn-orange:hover { opacity:0.9 !important;box-shadow:0 6px 24px rgba(249,115,22,0.5) !important; }
+</style>
+<script>
+  const sidebar  = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  const toggle   = document.getElementById('sidebar-toggle');
+  const iOpen    = document.getElementById('icon-open');
+  const iClose   = document.getElementById('icon-close');
+  function openSidebar()  { sidebar.style.transform='translateX(0)';backdrop.style.opacity='1';backdrop.style.pointerEvents='auto';iOpen.style.display='none';iClose.style.display='block';document.body.classList.add('sidebar-open'); }
+  function closeSidebar() { sidebar.style.transform='translateX(-100%)';backdrop.style.opacity='0';backdrop.style.pointerEvents='none';iOpen.style.display='block';iClose.style.display='none';document.body.classList.remove('sidebar-open'); }
+  toggle.addEventListener('click', () => sidebar.style.transform==='translateX(0px)' ? closeSidebar() : openSidebar());
+  backdrop.addEventListener('click', closeSidebar);
+  // Hide back button on home page
+  const backBtn = document.getElementById('back-btn');
+  if (backBtn && (window.location.pathname.endsWith('index.html') || window.location.pathname==='/' || window.location.pathname.endsWith('/'))) {
+    backBtn.style.visibility = 'hidden';
+  }
+</script>
+
+
+
+<main>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<section style="position:relative;min-height:65vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(135deg,#0a0a0d 0%,#14151a 50%,#0a0a0d 100%);">
+  <!-- Background image -->
+  <div style="position:absolute;inset:0;background-image:url('Images/hero.jpg');background-size:cover;background-position:center;opacity:0.25;"></div>
+  <!-- Iridescent orbs -->
+  <div style="position:absolute;top:-20%;left:-10%;width:600px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(13,148,136,0.25) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-20%;right:-5%;width:500px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(212,166,86,0.2) 0%,transparent 70%);pointer-events:none;"></div>
+ 
+  <div style="position:relative;text-align:center;padding:40px 24px;max-width:800px;">
+    <p class="section-eyebrow" style="margin-bottom:16px;">Est. 2014 · NMAMIT, Nitte</p>
+    <h1 style="font-family:'Inter',sans-serif;font-size:clamp(2.5rem,7vw,5rem);font-weight:800;line-height:1.05;margin-bottom:6px;color:#3b82f6;">
+      Robotics Club Nitte
+    </h1>
+    <p style="font-size:clamp(1rem,2.5vw,1.35rem);color:rgba(202,202,210,0.8);margin-bottom:0;font-weight:300;letter-spacing:0.06em;">
+      Innovate &nbsp;·&nbsp; Build &nbsp;·&nbsp; Inspire
+    </p>
+    <div style="position:relative;z-index:1;margin-top:-20px;">
+      <img src="Images/rcn_transparent.png" alt="Robotics Club Nitte" style="width:100%;max-width:420px;height:auto;display:block;margin:0 auto;filter:brightness(1.1) drop-shadow(0 0 18px rgba(59,130,246,0.35));">
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:5mm;">
+      <a href="#about"   class="btn-iris">Explore Club</a>
+      <a href="achievements.html" style="display:inline-block;padding:10px 24px;border-radius:99px;font-family:'Inter',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.04em;background:linear-gradient(135deg,#f97316,#ea580c);border:none;color:#fff;box-shadow:0 4px 18px rgba(249,115,22,0.3);transition:opacity 0.2s;" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Our Wins →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════════ -->
+<section id="about" class="fade-in-section orb-bg section-orange" style="padding:56px 24px;background:radial-gradient(ellipse 1200px 500px at 50% 0%, rgba(249,115,22,0.12) 0%, transparent 60%), #0c0a08;">
+  <div style="max-width:720px;margin:0 auto;text-align:center;">
+    <p class="section-eyebrow" style="font-size:0.78rem;letter-spacing:0.16em;">Who We Are</p>
+    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(2rem,4.5vw,3rem);font-weight:800;margin-bottom:20px;" class="grad-text-cyan">About Us</h2>
+    <p style="font-size:1.2rem;line-height:1.9;color:rgba(202,202,210,0.92);">
+      Established in 2014 at NMAMIT, the Robotics Club is an interdisciplinary club providing practical, hands-on experience in robotics. As the official robotics club of the institute, it exposes students across disciplines to complex projects — from designing and building mechanical and electronic bots to conducting workshops on IoT, 3D modelling, and programming, while competing at national and international events.
+    </p>
+  </div>
+
+  <!-- ─── OFFICE BEARERS ─── -->
+  <div style="max-width:1200px;margin:48px auto 0;text-align:center;">
+    <p class="section-eyebrow" style="margin-bottom:8px;">Leadership</p>
+    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;margin-bottom:48px;" class="grad-text">Office Bearers 2026</h2>
+
+    <!-- ROW 1: Core 4 — large featured cards in a 2×2 masonry feel -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:960px;margin:0 auto 20px;">
+      <!-- Card macro -->
+      <!-- President -->
+      <div class="holo-card card-light-border" style="padding:28px 20px;text-align:center;">
+        <div style="position:relative;display:inline-block;margin-bottom:16px;">
+          <div class="avatar-ring" style="width:88px;height:88px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-family:'Inter',sans-serif;font-size:1.4rem;color:#cacad2;margin:0 auto;">
+            <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Sanket_narale_.jpg" alt="Sanket Narale" onerror="this.style.display='none';this.parentElement.textContent='SN'">
+          </div>
+          <div style="position:absolute;bottom:-4px;right:-4px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f97316);display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:900;color:#000;">★</div>
         </div>
-        <span class="text-xl font-bold text-white hidden sm:block">Robotics Club Nitte</span>
-      </a>
-
-      <!-- Desktop Navigation Links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#about" class="text-white hover:text-orange-500 transition-colors">About Us</a>
-        <a href="#divisions" class="text-white hover:text-orange-500 transition-colors">Divisions</a>
-        <!-- <a href="upcoming.html" class="text-white hover:text-orange-500 transition-colors">Events</a> -->
-        <a href="achievements.html" class="text-white hover:text-orange-500 transition-colors">Achievements</a>
-        <a href="#contact" class="bg-orange-500 hover:bg-red-500 text-white font-semibold px-5 py-2 rounded-full transition-colors">Contact</a>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:6px;">Sanket Narale</h3>
+        <span class="role-badge">President</span>
+        <p style="font-size:0.7rem;color:rgba(202,202,210,0.45);margin-top:10px;letter-spacing:0.06em;text-transform:uppercase;">Robotics & AI</p>
       </div>
-      
-      <!-- Mobile Menu Button (Hamburger Icon) -->
-      <div class="md:hidden">
-        <button id="mobile-menu-button" class="text-white">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-        </button>
+      <!-- Secretary -->
+      <div class="holo-card card-light-border" style="padding:28px 20px;text-align:center;">
+        <div style="position:relative;display:inline-block;margin-bottom:16px;">
+          <div class="avatar-ring" style="width:88px;height:88px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-family:'Inter',sans-serif;font-size:1.4rem;color:#cacad2;margin:0 auto;">
+            <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Aaron Felix Fernandes .jpg" alt="Aaron Felix Fernandes" onerror="this.style.display='none';this.parentElement.textContent='AF'">
+          </div>
+        </div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:6px;">Aaron Felix Fernandes</h3>
+        <span class="role-badge">Secretary</span>
+        <p style="font-size:0.7rem;color:rgba(202,202,210,0.45);margin-top:10px;letter-spacing:0.06em;text-transform:uppercase;">Robotics & AI</p>
       </div>
-    </nav>
-    
-    <!-- Mobile Menu (Initially Hidden) -->
-    <div id="mobile-menu" class="hidden md:hidden bg-slate-800">
-      <a href="#about" class="block text-white text-center py-2 hover:bg-slate-700">About Us</a>
-      <a href="#divisions" class="block text-white text-center py-2 hover:bg-slate-700">Divisions</a>
-      <!-- <a href="upcoming.html" class="block text-white text-center py-2 hover:bg-slate-700">Events</a> -->
-      <a href="achievements.html" class="block text-white text-center py-2 hover:bg-slate-700">Achievements</a>
-      <a href="#contact" class="block text-white text-center py-2 hover:bg-slate-700">Contact</a>
+      <!-- Captain -->
+      <div class="holo-card card-light-border" style="padding:28px 20px;text-align:center;">
+        <div style="position:relative;display:inline-block;margin-bottom:16px;">
+          <div class="avatar-ring" style="width:88px;height:88px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-family:'Inter',sans-serif;font-size:1.4rem;color:#cacad2;margin:0 auto;">
+            <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Shreyas.JPG" alt="Shreyas Suvarna V" onerror="this.style.display='none';this.parentElement.textContent='SS'">
+          </div>
+        </div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:6px;">Shreyas Suvarna V</h3>
+        <span class="role-badge">Captain</span>
+        <p style="font-size:0.7rem;color:rgba(202,202,210,0.45);margin-top:10px;letter-spacing:0.06em;text-transform:uppercase;">Electronics & Comm.</p>
+      </div>
+      <!-- Treasurer -->
+      <div class="holo-card card-light-border" style="padding:28px 20px;text-align:center;">
+        <div style="position:relative;display:inline-block;margin-bottom:16px;">
+          <div class="avatar-ring" style="width:88px;height:88px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-family:'Inter',sans-serif;font-size:1.4rem;color:#cacad2;margin:0 auto;">
+            <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Sharan Rai K.jpg" alt="Sharan Rai K" onerror="this.style.display='none';this.parentElement.textContent='SR'">
+          </div>
+        </div>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:6px;">Sharan Rai K</h3>
+        <span class="role-badge">Treasurer</span>
+        <p style="font-size:0.7rem;color:rgba(202,202,210,0.45);margin-top:10px;letter-spacing:0.06em;text-transform:uppercase;">AI & ML</p>
+      </div>
     </div>
 
-    <!-- A subtle glowing line to separate the header from the main content. -->
-    <div class="h-px bg-gradient-to-r from-transparent via-teal-500/50 to-transparent"></div>
-  </header>
+    <!-- Iris divider with label -->
+    <div style="display:flex;align-items:center;gap:16px;max-width:800px;margin:32px auto;">
+      <div class="iris-divider" style="flex:1;"></div>
+      <span style="font-family:'Inter',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(202,202,210,0.35);">Leads & Managers</span>
+      <div class="iris-divider" style="flex:1;"></div>
+    </div>
 
-  <!-- Main Content Wrapper -->
-  <main>
-    
-    
- <!-- =================================================================== -->
-    <!-- Hero Section                                                        -->
-    <!-- =================================================================== -->
-    <section class="relative bg-slate-900 bg-cover bg-center min-h-[60vh] flex items-center justify-center px-6" style="background-image: url('Images/hero.jpg');">
-      <div class="absolute inset-0 bg-black/70"></div> <!-- Dark overlay for text readability -->
-      <div class="relative bg-black/50 p-8 rounded-lg max-w-4xl text-center">       
-        <h1 class="text-5xl md:text-6xl font-extrabold mb-4" style="color: var(--color-accent);">
-          Robotics Club Nitte
-        </h1>
-        <p class="text-xl md:text-2xl font-semibold tracking-wide text-white">
-          Innovate. Build. Inspire.
-        </p>
-         <img src="Images/rcn.jpg" alt="Robotics Club Nitte " height="=400px" width="600px">
+    <!-- ROW 2,3 & 4: Three rows of 3, last one centered -->
+    <div class="leads-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;max-width:960px;margin:0 auto;">
+
+      <!-- Compact card template: smaller avatar, horizontal feel -->
+      <!-- Vice President -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;flex-shrink:0;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Nagendra.jpg" alt="Nagendra S Hegde" onerror="this.style.display='none';this.parentElement.textContent='NH'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Nagendra S Hegde</p>
+          <span class="role-badge" style="font-size:0.6rem;">Vice President</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">VLSI Design</p>
+        </div>
       </div>
-    </section>
-
-
-
-    <!-- =================================================================== -->
-    <!-- Upcoming Event Section                                              -->
-    <!-- =================================================================== -->
-     <!-- 
-    <section class="bg-white text-slate-800 py-10 px-6 md:px-12 fade-in-section">
-      <div class="max-w-4xl mx-auto border-2 border-teal-500 rounded-lg p-6 md:p-10 shadow-lg">
-        <h2 class="text-3xl font-bold mb-3" style="color: var(--color-skyblue);">Upcoming Event</h2>
-        <article>
-          <h3 class="text-xl font-semibold mb-2">Line Follower Workshop</h3>
-          <p class="mb-4">
-            A hands-on workshop where you'll build and program your own line-following robot from scratch. Perfect for beginners!
-          </p>
-          <a href="upcoming.html" class="inline-block bg-orange-500 hover:bg-red-500 text-white font-semibold px-5 py-3 rounded-full transition-colors duration-300">
-            Learn More
-          </a>
-        </article>
+      <!-- Vice Captain -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Arham.jpg" alt="Arham Yusuf Shiekh" onerror="this.style.display='none';this.parentElement.textContent='AY'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Arham Yusuf Shiekh</p>
+          <span class="role-badge" style="font-size:0.6rem;">Vice-Captain & Inventory</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Robotics & AI</p>
+        </div>
       </div>
-    </section>
-    -->
-    
-    <!-- =================================================================== -->
-    <!-- About Us Section                                                    -->
-    <!-- =================================================================== -->
-    <section id="about" class="py-12 px-6 md:px-12 fade-in-section">
-      <div class="max-w-5xl mx-auto flex flex-col items-center">
-        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">About Us</h2>
-        <div class="max-w-3xl text-center text-lg md:text-xl">
-          <p>
-            Established in 2014 at NMAMIT, the Robotics Club is an interdisciplinary club with a motive to provide practical, hands-on experience in various applications of robotics. As the official robotics and multidisciplinary club of the institute, it gives students of various disciplines exposure to work on complex projects. The club focuses on designing, building, and creating various mechanical and electronic bots, regularly conducts workshops on Bot building, Internet of Things, 3D modelling, and Programming languages, and actively participates in various technical fests and events at national and international levels.
-          </p>
+      <!-- Jt Secretary -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Nikhil.jpg" alt="P Nikhil Pai" onerror="this.style.display='none';this.parentElement.textContent='NP'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">P Nikhil Pai</p>
+          <span class="role-badge" style="font-size:0.6rem;">Jt. Secretary & Inventory</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">VLSI Design</p>
+        </div>
+      </div>
+      <!-- Jt Treasurer -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Chandramouli.JPG" alt="Chandramouli Sharma" onerror="this.style.display='none';this.parentElement.textContent='CS'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Chandramouli Sharma</p>
+          <span class="role-badge" style="font-size:0.6rem;">Jt. Treasurer & Web Lead</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Computer & Comm.</p>
+        </div>
+      </div>
+      <!-- Workshop Lead (Savin) -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Savin.jpg" alt="Savin Suresha Almeida" onerror="this.style.display='none';this.parentElement.textContent='SA'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Savin Suresha Almeida</p>
+          <span class="role-badge" style="font-size:0.6rem;">Workshop & R&D Lead</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Robotics & AI</p>
+        </div>
+      </div>
+      <!-- Pratham -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Pratham Amin.jpeg" alt="Pratham Amin" onerror="this.style.display='none';this.parentElement.textContent='PA'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Pratham Amin</p>
+          <span class="role-badge" style="font-size:0.6rem;">Workshop & R&D Lead</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Mechanical Engg</p>
+        </div>
+      </div>
+      <!-- Sameeksha -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Sameeksha D.jpg" alt="Sameeksha D" onerror="this.style.display='none';this.parentElement.textContent='SD'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Sameeksha D</p>
+          <span class="role-badge" style="font-size:0.6rem;">R&D & Social Media</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Electronics & Comm.</p>
+        </div>
+      </div>
+      <!-- Ayush -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Ayush.jpg" alt="Y Ayush" onerror="this.style.display='none';this.parentElement.textContent='YA'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Y Ayush</p>
+          <span class="role-badge" style="font-size:0.6rem;">R&D & Social Media</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Electronics & Comm.</p>
+        </div>
+      </div>
+      <!-- Raghunandana -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Raghunandan Mayya.jpeg" alt="Raghunandana Mayya" onerror="this.style.display='none';this.parentElement.textContent='RM'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Raghunandana Mayya</p>
+          <span class="role-badge" style="font-size:0.6rem;">Inventory & Social Media</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Mechanical Engg</p>
+        </div>
+      </div>
+      <!-- Pranav -->
+      <div class="holo-card card-light-border" style="padding:18px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;">
+        <div class="avatar-ring" style="width:64px;height:64px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#1c1e24;font-size:1rem;color:#cacad2;">
+          <img style="width:100%;height:100%;object-fit:cover;" src="Officeb/Pranav S Salian.jpg" alt="Pranav S Salian" onerror="this.style.display='none';this.parentElement.textContent='PS'">
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:5px;">Pranav S Salian</p>
+          <span class="role-badge" style="font-size:0.6rem;">Website Dev Lead</span>
+          <p style="font-size:0.65rem;color:rgba(202,202,210,0.4);margin-top:8px;letter-spacing:0.06em;text-transform:uppercase;">Robotics & AI</p>
         </div>
       </div>
 
-      <!-- Office Bearers Section -->
-      <div class="w-full mt-20 max-w-7xl mx-auto">
-        <h2 class="text-4xl font-bold mb-12 text-center" style="color: var(--color-skyblue);">Office Bearers 2026</h2>
-        
-        <div class="flex flex-col items-center space-y-8 w-full">
-            <!-- ROW 1: 4 Members (President, Secretary, Captain, Treasurer) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 justify-center w-full max-w-6xl">
-                
-                <!-- President -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Sanket_narale_.jpg" alt="Sanket Narale" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SN'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Sanket Narale</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">President</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
-                </div>
+    </div><!-- /grid -->
+  </div>
+</section>
 
-                <!-- Secretary -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Aaron Felix Fernandes .jpg" alt="Aaron Felix Fernandes" onerror="this.style.display='none'; this.parentElement.innerHTML = 'AF'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Aaron Felix Fernandes</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Secretary</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
-                </div>
+<div class="iris-divider"></div>
 
-                <!-- Captain -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Shreyas.JPG" alt="Shreyas Suvarna V" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SS'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Shreyas Suvarna V</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Captain</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Electronics & Comm.</p>
-                </div>
+<!-- ══════════════════════════════════════════════
+     DIVISIONS
+══════════════════════════════════════════════ -->
+<section id="divisions" class="fade-in-section section-blue" style="padding:56px 24px;background:radial-gradient(ellipse 1200px 500px at 50% 0%, rgba(59,130,246,0.13) 0%, transparent 60%), linear-gradient(180deg,#0a0f1e 0%,#0f1428 100%);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <p class="section-eyebrow" style="text-align:center;">What We Do</p>
+    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;text-align:center;margin-bottom:48px;" class="grad-text">Our Divisions</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
 
-                <!-- Treasurer -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Sharan Rai K.jpg" alt="Sharan Rai K" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SR'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Sharan Rai K</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Treasurer</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">AI & ML</p>
-                </div>
-            </div>
-
-            <!-- ROW 2: 5 Members -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center w-full max-w-7xl">
-                
-                <!-- Vice President -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Nagendra.jpg" alt="Nagendra S Hegde" onerror="this.style.display='none'; this.parentElement.innerHTML = 'NH'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Nagendra S Hegde</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Vice President</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">VLSI Design</p>
-                </div>
-
-                <!-- Vice-Captain -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Arham.jpg" alt="Arham Yusuf Shiekh" onerror="this.style.display='none'; this.parentElement.innerHTML = 'AY'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Arham Yusuf Shiekh</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Vice-Captain & Inventory Manager</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
-                </div>
-
-                <!-- Jt Secretary -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Nikhil.jpg" alt="P Nikhil Pai" onerror="this.style.display='none'; this.parentElement.innerHTML = 'NP'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">P Nikhil Pai</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Joint Secretary & Inventory Manager</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">VLSI Design</p>
-                </div>
-
-                <!-- Jt Treasurer -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Chandramouli.JPG" alt="Chandramouli Sharma" onerror="this.style.display='none'; this.parentElement.innerHTML = 'CS'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Chandramouli Sharma</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Jt. Treasurer, Inventory & Web Lead</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Computer & Comm.</p>
-                </div>
-
-                <!-- Workshop Lead (Savin) -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Savin.jpg" alt="Savin Suresha Almeida" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SA'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Savin Suresha Almeida</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop & R&D Lead</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
-                </div>
-            </div>
-
-            <!-- ROW 3: 5 Members -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center w-full max-w-7xl">
-                
-                <!-- Workshop Lead (Pratham) -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Pratham Amin.jpeg" alt="Pratham Amin" onerror="this.style.display='none'; this.parentElement.innerHTML = 'PA'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Pratham Amin</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop & R&D Lead</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Mechanical Engg</p>
-                </div>
-
-                <!-- Social Media (Sameeksha) -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Sameeksha D.jpg" alt="Sameeksha D" onerror="this.style.display='none'; this.parentElement.innerHTML = 'SD'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Sameeksha D</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop, R&D & Social Media Lead</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Electronics & Comm.</p>
-                </div>
-
-                <!-- Social Media (Ayush) -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Ayush.jpg" alt="Y Ayush" onerror="this.style.display='none'; this.parentElement.innerHTML = 'YA'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Y Ayush</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Workshop, R&D & Social Media Lead</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Electronics & Comm.</p>
-                </div>
-
-                <!-- Inventory (Raghunandana) -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Raghunandan Mayya.jpeg" alt="Raghunandana Mayya" onerror="this.style.display='none'; this.parentElement.innerHTML = 'RM'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Raghunandana Mayya</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Inventory Manager & Social Media Lead</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Mechanical Engg</p>
-                </div>
-
-                <!-- Web Lead (Pranav) -->
-                <div class="bg-slate-800 rounded-lg shadow-lg p-5 text-center hover:scale-105 transition-transform duration-300 border border-slate-700 flex flex-col justify-between">
-                    <div>
-                        <div class="w-28 h-28 rounded-full mx-auto mb-4 bg-slate-700 flex items-center justify-center text-slate-300 text-3xl font-bold overflow-hidden border-2 border-orange-500/50">
-                            <img class="w-full h-full object-cover" src="Officeb/Pranav S Salian.jpg" alt="Pranav S Salian" onerror="this.style.display='none'; this.parentElement.innerHTML = 'PS'">
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-1 leading-tight">Pranav S Salian</h3>
-                        <p class="text-orange-500 font-semibold text-sm mb-1">Website Development Lead</p>
-                    </div>
-                    <p class="text-slate-400 text-xs uppercase tracking-wide mt-2 pt-2 border-t border-slate-700">Robotics & AI</p>
-                </div>
-            </div>
-
+      <!-- Combat -->
+      <article class="holo-card" style="padding:0;overflow:hidden;">
+        <div style="height:220px;overflow:hidden;">
+          <img src="Images/Combat.jpg" alt="Combat Robotics" style="width:100%;height:100%;object-fit:contain;background:#0a0a0d;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
         </div>
+        <div style="padding:24px;">
+          <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:10px;background:linear-gradient(135deg,#fbbf24,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Combat Robotics</h3>
+          <p style="font-size:0.9rem;line-height:1.7;color:rgba(202,202,210,0.75);">Race bots, Soccer bots, Sumo bots and War bots — we focus on design, testing, fabrication, and control at a competitive level.</p>
+        </div>
+      </article>
 
+      <!-- Soft -->
+      <article class="holo-card" style="padding:0;overflow:hidden;">
+        <div style="height:220px;overflow:hidden;">
+          <img src="Images/softrobo.jpg" alt="Soft Robotics" style="width:100%;height:100%;object-fit:contain;background:#0a0a0d;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div style="padding:24px;">
+          <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:10px;background:linear-gradient(135deg,#d4a656,#0d9488);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Soft Robotics</h3>
+          <p style="font-size:0.9rem;line-height:1.7;color:rgba(202,202,210,0.75);">Line followers, maze solvers, and IoT hobby projects — exploring the gentler, smarter side of autonomous machines.</p>
+        </div>
+      </article>
+
+      <!-- Aero -->
+      <article class="holo-card" style="padding:0;overflow:hidden;">
+        <div style="height:220px;overflow:hidden;">
+          <img src="Images/Aerodiv.jpg" alt="Aero Division" style="width:100%;height:100%;object-fit:contain;background:#0a0a0d;transition:transform 0.5s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        </div>
+        <div style="padding:24px;">
+          <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1.15rem;margin-bottom:10px;background:linear-gradient(135deg,#06b6d4,#0d9488);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Aero Division</h3>
+          <p style="font-size:0.9rem;line-height:1.7;color:rgba(202,202,210,0.75);">Drones and rockets designed, fabricated, and launched — the sky is literally not the limit.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="iris-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     RECENT EVENTS
+══════════════════════════════════════════════ -->
+<section class="fade-in-section section-orange" style="padding:56px 24px;background:radial-gradient(ellipse 1200px 500px at 50% 0%, rgba(249,115,22,0.12) 0%, transparent 60%), #0c0a08;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <p class="section-eyebrow" style="text-align:center;">Activities</p>
+    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;text-align:center;margin-bottom:48px;" class="grad-text-cyan">Recent Events & Workshops</h2>
+    <div style="display:grid;grid-template-columns:1fr;gap:20px;">
+
+      <!-- Featured wide card -->
+      <article class="holo-card" style="grid-column:1/-1;padding:0;overflow:hidden;">
+        <div class="media-card">
+          <div class="mc-photo">
+            <img src="Images/lfr workshop_2025.jpg" alt="Line Follower Workshop 2025">
+          </div>
+          <div class="mc-title">
+            <span class="role-badge" style="align-self:flex-start;margin-bottom:14px;">Workshop · Nov 2025</span>
+            <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1.3rem;color:#fff;margin-bottom:0;">Line Follower Workshop</h3>
+          </div>
+          <div class="mc-text">
+            <p style="font-size:0.9rem;line-height:1.7;color:rgba(202,202,210,0.75);">53 students navigated the full robotics development cycle — Fusion 360, soldering, assembly and coding — walking away with fully functional autonomous robots.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3-col row for small cards -->
+      <div class="workshop-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;">
+      <article class="holo-card" style="padding:24px;margin:0;">
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:10px;">Internet Of Things</h3>
+        <p style="font-size:0.88rem;line-height:1.7;color:rgba(202,202,210,0.7);">Workshops covering IoT fundamentals, sensor integration, and cloud connectivity.</p>
+      </article>
+      <article class="holo-card" style="padding:24px;margin:0;">
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:10px;">3D Modelling</h3>
+        <p style="font-size:0.88rem;line-height:1.7;color:rgba(202,202,210,0.7);">CAD training to design precise 3D models for robot parts and assemblies.</p>
+      </article>
+      <article class="holo-card" style="padding:24px;margin:0;">
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1rem;color:#fff;margin-bottom:10px;">PCB Design</h3>
+        <p style="font-size:0.88rem;line-height:1.7;color:rgba(202,202,210,0.7);">Designing custom printed circuit boards for electronic circuits in robotic projects.</p>
+      </article>
+      </div><!-- /3-col -->
+
+    </div>
+  </div>
+</section>
+
+<div class="iris-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     ACHIEVEMENTS PREVIEW — new zigzag layout
+══════════════════════════════════════════════ -->
+<section class="fade-in-section orb-bg section-blue" style="padding:56px 24px;background:radial-gradient(ellipse 1200px 500px at 50% 0%, rgba(59,130,246,0.13) 0%, transparent 60%), #0a0f1e;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <p class="section-eyebrow" style="text-align:center;">Trophy Cabinet</p>
+    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;text-align:center;margin-bottom:56px;" class="grad-text">Our Achievements</h2>
+
+    <!-- Zigzag: image left / right alternating -->
+    <!-- Card 1: image left -->
+    <div class="media-card" style="border-radius:20px;overflow:hidden;border:1.5px solid rgba(255,255,255,0.16);margin-bottom:4px;">
+      <div class="mc-photo" style="max-height:340px;">
+        <img src="Achivements2025/Techtatva25.JPG" alt="TECHTATVA 2025" style="object-position:top center;" onerror="this.onerror=null;this.src='https://placehold.co/600x400/14151a/0d9488?text=Techtatva+2025'">
       </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- Our Divisions Section                                               -->
-    <!-- =================================================================== -->
-    <section id="divisions" class="bg-white text-slate-800 py-12 px-6 md:px-12 fade-in-section">
-      <div class="max-w-6xl mx-auto">
-        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">
-          Our Divisions
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <!-- Combat Robotics Card -->
-          <article class="border-2 border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
-            <h3 class="text-2xl font-semibold mb-3" style="color: var(--color-accent);">Combat Robotics</h3>
-            <div class="h-64 mb-4 overflow-hidden rounded-md border-2 border-slate-200">
-              <img src="Images/Combat.jpg" alt="Combat Robotics Projects" class="w-full h-full object-contain">
-            </div>
-            <p>
-              Our combat robotics division is involved in building various bots like Race bots, Soccer bots, sumo bots and War bots. We focus on design, testing, fabrication, and control.
-            </p>
-          </article>
-          <!-- Soft Robotics Card -->
-          <article class="border-2 border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
-            <h3 class="text-2xl font-semibold mb-3" style="color: var(--color-accent);">Soft Robotics</h3>
-            <div class="h-64 mb-4 overflow-hidden rounded-md border-2 border-slate-200">
-              <img src="Images/softrobo.jpg" alt="Soft Robotics Project" class="w-full h-full object-contain">
-            </div>
-            <p>
-              We explore the field of soft robotics by designing, creating, testing, and implementing line followers, maze solvers, and various IoT hobby projects.
-            </p>
-          </article>
-          <!-- Aero Division Card -->
-          <article class="border-2 border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
-            <h3 class="text-2xl font-semibold mb-3" style="color: var(--color-accent);">Aero Division</h3>
-            <div class="h-64 mb-4 overflow-hidden rounded-md border-2 border-slate-200">
-              <img src="Images/Aerodiv.jpg" alt="Aero Division Project" class="w-full h-full object-contain">
-            </div>
-            <p>
-              Our Aero division involves the design, fabrication, and implementation of drones and rockets.
-            </p>
-          </article>
+      <div class="mc-title" style="background:#1c1e24;">
+        <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0d9488;margin-bottom:10px;">Oct 2025 · MIT Manipal</span>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1.2rem;color:#fff;margin-bottom:0;">Dominant Victory at TECHTATVA 2025</h3>
+      </div>
+      <div class="mc-text" style="background:#1c1e24;">
+        <p style="font-size:0.88rem;line-height:1.7;color:rgba(202,202,210,0.7);margin-bottom:16px;">Swept top positions across Cadify, Maze Solver, Line Follower, Off-road Mayhem, and Water Rocket.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="medal medal-silver">🥈 Cadify</span>
+          <span class="medal medal-gold">🥇🥈🥉 Maze Solver</span>
+          <span class="medal medal-gold">🥇🥈🥉 Line Follower</span>
+          <span class="medal medal-gold">🥇🥈🥉 Off-road Mayhem</span>
+          <span class="medal medal-gold">🥇🥈 Water Rocket</span>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- =================================================================== -->
-    <!-- Recent Events & Workshops Section                                   -->
-    <!-- =================================================================== -->
-    <section class="py-12 px-6 md:px-12 fade-in-section">
-      <div class="max-w-6xl mx-auto">
-        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">
-          Recent Events & Workshops
-        </h2>
-        <!-- Replaced flexbox with grid for specific row layout -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          <!-- Line Follower Workshop Card (Occupies full first row) -->
-          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300 md:col-span-3">
-            <h3 class="text-xl font-semibold mb-2 text-orange-500">Line Follower Workshop</h3>
-            <!-- Removed h-48 to allow full image height, changed object-cover to h-auto -->
-            <div class="mb-4 overflow-hidden rounded-md border border-slate-600">
-               <img src="Images/lfr workshop_2025.jpg" alt="Line Follower Workshop 2025" class="w-full h-auto">
-            </div>
-            <p>
-              We hosted 53 students on November 8, 2025, for an intensive "Line Follower Robot" workshop. From mastering Fusion 360 and soldering to final assembly and coding, participants navigated the full robotics development cycle, resulting in fully functional autonomous robots.
-            </p>
-          </article>
+    <!-- Spacer line -->
+    <div style="height:3px;background:linear-gradient(90deg,transparent,rgba(212,166,86,0.3),rgba(13,148,136,0.3),transparent);margin:0 0 4px;"></div>
 
-          <!-- Internet Of Things Card -->
-          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
-            <h3 class="text-xl font-semibold mb-2 text-orange-500">Internet Of Things</h3>
-            <p>
-              Workshops covering IoT fundamentals, sensor integration, and cloud connectivity to create smart robotic systems.
-            </p>
-          </article>
-          <!-- 3D Modelling Card -->
-          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
-            <h3 class="text-xl font-semibold mb-2 text-orange-500">3D Modelling</h3>
-            <p>
-              Training on CAD software to design precise 3D models for robot parts and assemblies, preparing for fabrication.
-            </p>
-          </article>
-          <!-- PCB Design Card -->
-          <article class="bg-slate-800 border border-teal-500 rounded-lg p-6 shadow hover:shadow-lg transition-shadow duration-300">
-            <h3 class="text-xl font-semibold mb-2 text-orange-500">PCB Design</h3>
-            <p>
-              Instruction on designing printed circuit boards for custom electronic circuits used in robotic projects.
-            </p>
-          </article>
-
+    <!-- Card 2: image right -->
+    <div class="media-card media-card-reverse" style="border-radius:20px;overflow:hidden;border:1.5px solid rgba(255,255,255,0.16);">
+      <div class="mc-title" style="background:#1c1e24;">
+        <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#f97316;margin-bottom:10px;">Jul 2023 · National Level</span>
+        <h3 style="font-family:'Inter',sans-serif;font-weight:800;font-size:1.2rem;color:#fff;margin-bottom:0;">Technoxian World Cup 2023</h3>
+      </div>
+      <div class="mc-text" style="background:#1c1e24;">
+        <p style="font-size:0.88rem;line-height:1.7;color:rgba(202,202,210,0.7);margin-bottom:16px;">2nd runners-up in the Under 15kg Robowars category at one of India's most prestigious robotics championships.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="medal medal-bronze">🥉 Robowars U15kg</span>
         </div>
       </div>
-    </section>
-
-    <!-- =================================================================== -->
-    <!-- Our Achievements Section                                            -->
-    <!-- =================================================================== -->
-    <section class="bg-white text-slate-800 py-12 px-6 md:px-12 fade-in-section">
-      <div class="max-w-5xl mx-auto">
-        <h2 class="text-4xl font-bold mb-8 text-center" style="color: var(--color-skyblue);">
-          Our Achievements
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="bg-slate-100 border-l-4 border-orange-500 p-6 rounded-r-lg md:col-span-2 flex flex-col md:flex-row items-center gap-6">
-            <img src="Achimg/Techtatva25.JPG" alt="TECHTATVA 2025 MIT Manipal" class="w-full md:w-1/2 rounded-lg shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Techtatva+2025';">
-            <div class="md:w-1/2">
-                <h3 class="text-2xl font-bold text-slate-700 mb-2">Dominant Victory at TECHTATVA 2025</h3>
-                <p class="text-lg">An outstanding performance at MIT Manipal, sweeping top positions in multiple events including Cadify, Maze Solver, Line Follower, Off-road Mayhem, and Water Rocket.</p>
-            </div>
-          </div>
-          <div class="bg-slate-100 border-l-4 border-orange-500 p-6 rounded-r-lg">
-              <img src="Achimg/Technoxian2023.jpg" alt="Technoxian World Cup 2023" class="w-full rounded-lg shadow-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Technoxian+2023';">
-              <h3 class="text-xl font-bold text-slate-700 mb-2">Technoxian World Cup 2023</h3>
-              <p class="text-lg">The team secured the 2nd runners-up position in this prestigious event, competing in the Under 15kg Robowars category.</p>
-          </div>
-          <div class="bg-slate-100 border-l-4 border-orange-500 p-6 rounded-r-lg">
-              <img src="Achimg/TECHNOVANZA2023.png" alt="TECHNOVANZA 2023 VJTI Mumbai" class="w-full rounded-lg shadow-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Technovanza+2023';">
-              <h3 class="text-xl font-bold text-slate-700 mb-2">Success at TECHNOVANZA 2023</h3>
-              <p class="text-lg">The team achieved 2nd Runner Up in both the 15kg Robowars and Robo Sumo categories at VJTI, Mumbai.</p>
-          </div>
-        </div>
-        <div class="text-center mt-10">
-          <a href="achievements.html" class="inline-block bg-orange-500 hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-full transition-colors duration-300">
-            View All Achievements
-          </a>
-        </div>
+      <div class="mc-photo" style="max-height:280px;">
+        <img src="Achivements2025/Technoxian2023.jpg" alt="Technoxian 2023" onerror="this.onerror=null;this.src='https://placehold.co/600x400/14151a/f97316?text=Technoxian+2023'">
       </div>
-    </section>
+    </div>
 
-    <!-- =================================================================== -->
-    <!-- Contact Us Section                                                  -->
-    <!-- =================================================================== -->
-    <section id="contact" class="py-12 px-6 md:px-12 fade-in-section" aria-label="Contact Us">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-bold mb-10 text-center" style="color: var(--color-skyblue);">
-          Get in touch with us
-        </h2>
-        
-        <!-- This form is configured to send data to a Google Form. -->
-        <!-- The 'id' is used by our JavaScript to handle the submission. -->
-        <form id="contact-form" class="space-y-6" aria-label="Contact form">
-          <!-- Each input's 'name' attribute has been updated with the correct entry.ID -->
-          <div>
-            <label for="name" class="block mb-2 font-semibold">Name</label>
-            <input type="text" id="name" name="entry.887813559" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Your full name" autocomplete="name">
-          </div>
-          <div>
-            <label for="email" class="block mb-2 font-semibold">Email</label>
-            <input type="email" id="email" name="entry.2027395874" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="you@example.com" autocomplete="email">
-          </div>
-          <div>
-            <label for="subject" class="block mb-2 font-semibold">Subject</label>
-            <input type="text" id="subject" name="entry.701956586" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Subject of your message">
-          </div>
-          <div>
-            <label for="message" class="block mb-2 font-semibold">Message</label>
-            <textarea id="message" name="entry.3234755" rows="5" required class="w-full rounded-md border border-gray-600 bg-slate-800 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 resize-y" placeholder="Write your message here..."></textarea>
-          </div>
-          <button type="submit" class="bg-orange-500 hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-full transition-colors duration-300 focus:outline-none focus:ring-4 focus:ring-orange-400">
-            Send Message
-          </button>
-        </form>
-
-        <!-- This message is hidden by default and shown by our JavaScript on successful form submission. -->
-        <div id="success-message" class="hidden mt-6 p-4 text-center text-lg bg-teal-500/20 text-teal-300 border border-teal-500 rounded-md">
-          Thank you for your message! We'll get back to you soon.
-        </div>
-
-        <div class="mt-16 text-center text-slate-400">
-  <h3 class="text-2xl font-bold mb-4" style="color: var(--color-skyblue);">Connect with Us</h3>
-  <div class="flex justify-center items-center gap-6 mb-8">  
-            <a href="https://www.instagram.com/roboticsclub_nitte/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:opacity-80 transition-opacity">
-              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10">
-                <title>Instagram</title>
-                <defs>
-                  <linearGradient id="insta-gradient" x1="50%" y1="0%" x2="50%" y2="100%">
-                    <stop offset="0%" stop-color="#833ab4"></stop>
-                    <stop offset="50%" stop-color="#fd1d1d"></stop>
-                    <stop offset="100%" stop-color="#fcb045"></stop>
-                  </linearGradient>
-                </defs>
-                <path fill="url(#insta-gradient)" d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.784.305-1.455.718-2.126 1.388C1.344 2.69 1.03 3.35 1.03 4.135c-.3.765-.5 1.635-.56 2.913-.06 1.28-.07 1.687-.07 4.947s.015 3.667.072 4.947c.06 1.278.26 2.15.56 2.913.305.785.72 1.455 1.455-1.39 2.126.67.67 1.34.965 2.125 1.27.765.3 1.635.5 2.913.56 1.28.056 1.687.07 4.947.07s3.667-.015 4.947-.072c1.278-.06 2.15-.26 2.913-.56.785-.305 1.455-.72 2.126-1.39.67-.67.965-1.34 1.27-2.125.3-.765.5-1.635.56-2.913.06-1.28.07-1.687.07-4.947s-.015-3.667-.072-4.947c-.06-1.278-.26-2.15-.56-2.913-.305-.785-.72-1.455-1.39-2.126C21.31 1.344 20.65 1.03 19.865 1.03c-.765-.3-1.635-.5-2.913-.56C15.667.015 15.26 0 12 0zm0 2.16c3.2 0 3.585.01 4.85.07 1.17.05 1.8.22 2.22.42.5.24.87.52 1.25.9.38.38.67.75.9 1.25.2.42.37 1.05.42 2.22.06 1.265.07 1.65.07 4.85s-.01 3.585-.07 4.85c-.05 1.17-.22 1.8-.42 2.22-.24.5-.52.87-.9 1.25-.38.38-.75.67-1.25.9-.42-.37-1.05-.42-2.22C2.17 15.585 2.16 15.2 2.16 12s.01-3.585.07-4.85c.05-1.17.22 1.8.42-2.22.24-.5.52.87.9-1.25.38.38.75.67 1.25.9.42.2 1.05.37 2.22.42C8.415 2.17 8.8 2.16 12 2.16zm0 3.14A6.7 6.7 0 1012 18.7a6.7 6.7 0 000-13.4zM12 16a4 4 0 110-8 4 4 0 010 8zm6.4-11.8a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path>
-              </svg>
-            </a>
-            <!-- LinkedIn Logo -->
-            <a href="https://www.linkedin.com/company/robotics-club-nitte/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:opacity-80 transition-opacity">
-              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="#0077B5">
-                <title>LinkedIn</title>
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.354V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.37-1.852 3.602 0 4.268 2.37 4.268 5.455v6.288zM5.337 7.433a2.07 2.07 0 11.001-4.139 2.07 2.07 0 01-.001 4.139zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.225 0z"></path>
-              </svg>
-            </a>
-          </div>
-          <div class="flex justify-center items-center gap-3">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-              <a href="mailto:roboticsclub@nitte.edu.in" class="hover:text-orange-500 transition-colors text-lg">roboticsclub@nitte.edu.in</a>
-          </div>
-        </div>
+    <!-- Recent quick wins grid -->
+    <div style="margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+      <div class="holo-card" style="padding:20px;">
+        <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#d4a656;margin-bottom:6px;">Mar 2026 · MITE</p>
+        <h4 style="font-family:'Inter',sans-serif;font-weight:700;color:#fff;margin-bottom:8px;font-size:0.95rem;">Sentia 2026</h4>
+        <span class="medal medal-gold">🥇 Robo Soccer</span>
       </div>
-    </section>
-  </main>
-  
-  <!-- =================================================================== -->
-  <!-- Footer                                                              -->
-  <!-- =================================================================== -->
-  <footer class="bg-slate-800 border-t border-teal-500/20 text-white py-8 px-6 md:px-12">
-      <div class="max-w-6xl mx-auto text-center text-slate-400">
-          <p>&copy; 2025 Robotics Club Nitte. All Rights Reserved.</p>
-          <p class="mt-2 text-sm">NMAM Institute of Technology, Nitte</p>
+      <div class="holo-card" style="padding:20px;">
+        <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#d4a656;margin-bottom:6px;">Jan 2026 · Udupi</p>
+        <h4 style="font-family:'Inter',sans-serif;font-weight:700;color:#fff;margin-bottom:8px;font-size:0.95rem;">Fastbit 2026</h4>
+        <span class="medal medal-gold" style="margin-right:4px;">🥇 PCB Design</span>
+        <span class="medal medal-silver">🥈 Robo Soccer</span>
       </div>
-  </footer>
+      <div class="holo-card" style="padding:20px;">
+        <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#d4a656;margin-bottom:6px;">Dec 2025 · SDIT</p>
+        <h4 style="font-family:'Inter',sans-serif;font-weight:700;color:#fff;margin-bottom:8px;font-size:0.95rem;">Sambhram 2025</h4>
+        <span class="medal medal-gold" style="margin-right:4px;">🥇 LFR</span>
+        <span class="medal medal-gold">🥇 Soccer</span>
+      </div>
+      <div class="holo-card" style="padding:20px;">
+        <p style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#d4a656;margin-bottom:6px;">Nov 2025 · SJEC</p>
+        <h4 style="font-family:'Inter',sans-serif;font-weight:700;color:#fff;margin-bottom:8px;font-size:0.95rem;">Tiara 2025</h4>
+        <span class="medal medal-gold">🥇 + 🥈 LFR</span>
+      </div>
+    </div>
 
-  <!-- Link to our external JavaScript file. 'defer' ensures it runs after the HTML is parsed. -->
-  <script src="script.js" defer></script>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="achievements.html" class="btn-iris">View All Achievements →</a>
+    </div>
+  </div>
+</section>
 
+<div class="iris-divider"></div>
+
+<!-- ══════════════════════════════════════════════
+     CONTACT
+══════════════════════════════════════════════ -->
+<section id="contact" class="fade-in-section section-orange" style="padding:32px 24px 40px;background:radial-gradient(ellipse 1200px 500px at 50% 0%, rgba(249,115,22,0.12) 0%, transparent 60%), #0c0a08;">
+  <div style="max-width:860px;margin:0 auto;">
+    <p class="section-eyebrow" style="text-align:center;margin-bottom:4px;">Reach Out</p>
+    <h2 style="font-family:'Inter',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;text-align:center;margin-bottom:18px;" class="grad-text">Get in Touch</h2>
+
+    <div class="holo-card" style="padding:22px 24px;">
+      <form id="contact-form">
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:rgba(202,202,210,0.6);margin-bottom:6px;">Name</label>
+          <input type="text" name="entry.887813559" required placeholder="Your full name" autocomplete="name"
+            style="width:100%;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:9px 14px;color:#fff;font-size:0.9rem;outline:none;transition:border-color 0.2s;"
+            onfocus="this.style.borderColor='rgba(249,115,22,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:rgba(202,202,210,0.6);margin-bottom:6px;">Email</label>
+          <input type="email" name="entry.2027395874" required placeholder="you@example.com" autocomplete="email"
+            style="width:100%;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:9px 14px;color:#fff;font-size:0.9rem;outline:none;transition:border-color 0.2s;"
+            onfocus="this.style.borderColor='rgba(249,115,22,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:rgba(202,202,210,0.6);margin-bottom:6px;">Subject</label>
+          <input type="text" name="entry.701956586" required placeholder="Subject"
+            style="width:100%;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:9px 14px;color:#fff;font-size:0.9rem;outline:none;transition:border-color 0.2s;"
+            onfocus="this.style.borderColor='rgba(249,115,22,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:rgba(202,202,210,0.6);margin-bottom:6px;">Message</label>
+          <textarea name="entry.3234755" rows="3" required placeholder="Write your message here..."
+            style="width:100%;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;padding:9px 14px;color:#fff;font-size:0.9rem;outline:none;resize:vertical;transition:border-color 0.2s;font-family:inherit;"
+            onfocus="this.style.borderColor='rgba(249,115,22,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+        </div>
+        <button type="submit" class="btn-iris" style="width:100%;padding:10px 24px;font-size:0.9rem;">Send Message</button>
+      </form>
+      <div id="success-message" class="hidden" style="margin-top:20px;padding:16px;text-align:center;border-radius:10px;background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);color:#06b6d4;">
+        ✓ Message sent! We'll get back to you soon.
+      </div>
+    </div>
+
+    <!-- Social links -->
+    <div style="text-align:center;margin-top:18px;">
+      <h3 style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:10px;" class="grad-text-cyan">Connect With Us</h3>
+      <div style="display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:8px;">
+        <a href="https://www.instagram.com/roboticsclub_nitte/" target="_blank" rel="noopener" aria-label="Instagram" style="opacity:0.8;transition:opacity 0.2s;transform:scale(1);display:inline-block;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.1)'" onmouseout="this.style.opacity='0.8';this.style.transform='scale(1)'">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px;"><defs><linearGradient id="ig" x1="50%" y1="0%" x2="50%" y2="100%"><stop offset="0%" stop-color="#833ab4"/><stop offset="50%" stop-color="#fd1d1d"/><stop offset="100%" stop-color="#fcb045"/></linearGradient></defs><path fill="url(#ig)" d="M12 2.163c3.2 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/robotics-club-nitte/" target="_blank" rel="noopener" aria-label="LinkedIn" style="opacity:0.8;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:28px;" fill="#0077B5"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.354V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.37-1.852 3.602 0 4.268 2.37 4.268 5.455v6.288zM5.337 7.433a2.07 2.07 0 11.001-4.139 2.07 2.07 0 01-.001 4.139zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>
+        </a>
+      </div>
+      <a href="mailto:roboticsclub@nitte.edu.in" style="font-size:0.95rem;color:rgba(202,202,210,0.7);text-decoration:none;transition:color 0.2s;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.color='#60a5fa'" onmouseout="this.style.color='rgba(202,202,210,0.7)'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        roboticsclub@nitte.edu.in
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#080612;border-top:1.5px solid rgba(255,255,255,0.16);padding:36px 24px;text-align:center;">
+  <div class="iris-divider" style="margin-bottom:24px;"></div>
+  <p style="font-family:'Inter',sans-serif;font-weight:700;font-size:0.95rem;color:#3b82f6;">Robotics Club Nitte</p>
+  <p style="font-size:0.8rem;color:rgba(202,202,210,0.35);margin-top:8px;">NMAM Institute of Technology, Nitte &nbsp;·&nbsp; Est. 2014</p>
+  <p style="font-size:0.75rem;color:rgba(202,202,210,0.25);margin-top:6px;">&copy; 2025 Robotics Club Nitte. All Rights Reserved.</p>
+</footer>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script src="script.js"></script>
 </body>
 </html>
