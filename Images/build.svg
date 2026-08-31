@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Outer Chip Package -->
+  <rect x="25" y="25" width="50" height="50" rx="8" stroke="#38bdf8" fill="rgba(37,99,235,0.12)" stroke-width="3"/>
+  <!-- Inner Silicon Die -->
+  <rect x="37" y="37" width="26" height="26" rx="4" stroke="#ffffff" fill="rgba(56,189,248,0.15)" stroke-width="2.2"/>
+  <!-- Internal Core Pattern -->
+  <rect x="44" y="44" width="12" height="12" rx="2" stroke="#38bdf8" fill="#030712" stroke-width="2"/>
+  
+  <!-- Top Pins -->
+  <line x1="35" y1="12" x2="35" y2="25" stroke="#38bdf8" stroke-width="2.6"/>
+  <line x1="45" y1="12" x2="45" y2="25" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="55" y1="12" x2="55" y2="25" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="65" y1="12" x2="65" y2="25" stroke="#38bdf8" stroke-width="2.6"/>
+
+  <!-- Bottom Pins -->
+  <line x1="35" y1="75" x2="35" y2="88" stroke="#38bdf8" stroke-width="2.6"/>
+  <line x1="45" y1="75" x2="45" y2="88" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="55" y1="75" x2="55" y2="88" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="65" y1="75" x2="65" y2="88" stroke="#38bdf8" stroke-width="2.6"/>
+
+  <!-- Left Pins -->
+  <line x1="12" y1="35" x2="25" y2="35" stroke="#38bdf8" stroke-width="2.6"/>
+  <line x1="12" y1="45" x2="25" y2="45" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="12" y1="55" x2="25" y2="55" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="12" y1="65" x2="25" y2="65" stroke="#38bdf8" stroke-width="2.6"/>
+
+  <!-- Right Pins -->
+  <line x1="75" y1="35" x2="88" y2="35" stroke="#38bdf8" stroke-width="2.6"/>
+  <line x1="75" y1="45" x2="88" y2="45" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="75" y1="55" x2="88" y2="55" stroke="#ffffff" stroke-width="2.6"/>
+  <line x1="75" y1="65" x2="88" y2="65" stroke="#38bdf8" stroke-width="2.6"/>
+</svg>

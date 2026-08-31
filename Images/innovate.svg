@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Base Stand -->
+  <path d="M18 88 h38" stroke="#38bdf8" stroke-width="3.5"/>
+  <path d="M26 88 L32 76 h10 l6 12" stroke="#ffffff" fill="rgba(37,99,235,0.2)" stroke-width="2.5"/>
+  
+  <!-- Shoulder Joint -->
+  <circle cx="37" cy="74" r="7" stroke="#38bdf8" fill="#030712" stroke-width="2.8"/>
+  <circle cx="37" cy="74" r="3" stroke="#ffffff" fill="#38bdf8" stroke-width="1.5"/>
+
+  <!-- Lower Arm Link -->
+  <path d="M37 74 L52 48" stroke="#ffffff" stroke-width="4"/>
+  <line x1="40" y1="70" x2="55" y2="44" stroke="#38bdf8" stroke-width="1.8"/>
+
+  <!-- Elbow Joint -->
+  <circle cx="53" cy="46" r="7" stroke="#38bdf8" fill="#030712" stroke-width="2.8"/>
+  <circle cx="53" cy="46" r="3" stroke="#ffffff" fill="#38bdf8" stroke-width="1.5"/>
+
+  <!-- Forearm Link -->
+  <path d="M53 46 L74 34" stroke="#ffffff" stroke-width="3.8"/>
+
+  <!-- Wrist Joint -->
+  <circle cx="74" cy="34" r="5" stroke="#38bdf8" fill="#030712" stroke-width="2.5"/>
+
+  <!-- Gripper Hand & Fingers -->
+  <path d="M74 34 L82 28" stroke="#ffffff" stroke-width="2.5"/>
+  <!-- Top Finger -->
+  <path d="M82 28 l6 -6 h4" stroke="#38bdf8" stroke-width="2.5"/>
+  <!-- Bottom Finger -->
+  <path d="M82 28 l6 6 h4" stroke="#38bdf8" stroke-width="2.5"/>
+</svg>
